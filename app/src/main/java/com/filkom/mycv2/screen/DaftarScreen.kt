@@ -17,16 +17,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun daftar(
-    onSimpan: (nim: String, nama: String, email: String, alamat: String) -> Unit,
-    initialNim: String = "",
-    initialNama: String = "",
-    initialEmail: String = "",
-    initialAlamat: String = "",
+    onSimpan: (nim: String, nama: String, email: String, alamat: String) -> Unit
 ) {
-    var nim by remember { mutableStateOf(initialNim) }
-    var nama by remember { mutableStateOf(initialNama) }
-    var email by remember { mutableStateOf(initialEmail) }
-    var alamat by remember { mutableStateOf(initialAlamat) }
+    var nim by remember { mutableStateOf("") }
+    var nama by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var alamat by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -67,7 +63,7 @@ fun daftar(
         Spacer(Modifier.height(16.dp))
         Button(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            onClick = { onSimpan(nim, nama, email, alamat) }  // kirim nilai ke Nav
+            onClick = { onSimpan(nim, nama, email, alamat) }
         ) {
             Text("SIMPAN")
         }
@@ -77,5 +73,5 @@ fun daftar(
 @Preview
 @Composable
 fun daftarPreview() {
-    daftar(onSimpan = { _, _, _, _ -> })
+    daftar { _, _, _, _ -> }
 }

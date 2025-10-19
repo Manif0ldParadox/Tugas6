@@ -17,15 +17,11 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Login(
-    onLogin: (nim: String, nama: String) -> Unit,
+    onLogin: (email: String) -> Unit,
     onDaftar: () -> Unit,
-    initialNim: String = "",
-    initialNama: String = "",
 ) {
-    var nim by remember { mutableStateOf(initialNim) }
-    var nama by remember { mutableStateOf(initialNama) }
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") } // opsional
 
     Column(
         modifier = Modifier
@@ -36,24 +32,9 @@ fun Login(
 
         Spacer(Modifier.height(12.dp))
         OutlinedTextField(
-            value = nim,
-            onValueChange = { nim = it },
-            label = { Text("NIM") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(Modifier.height(8.dp))
-        OutlinedTextField(
-            value = nama,
-            onValueChange = { nama = it },
-            label = { Text("Nama") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(Modifier.height(8.dp))
-        OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email (opsional)") },
+            label = { Text("Email") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(8.dp))
@@ -67,7 +48,7 @@ fun Login(
         Spacer(Modifier.height(16.dp))
         Button(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            onClick = { onLogin(nim, nama) }   // kirim nilai ke Nav
+            onClick = { onLogin(email) }
         ) {
             Text("LOGIN")
         }
@@ -85,5 +66,5 @@ fun Login(
 @Preview
 @Composable
 fun loginPreview() {
-    Login(onLogin = { _, _ -> }, onDaftar = {})
+    Login(onLogin = {}, onDaftar = {})
 }

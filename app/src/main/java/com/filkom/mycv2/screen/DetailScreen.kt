@@ -15,13 +15,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.filkom.mycv2.viewmodel.AuthState
+import com.filkom.mycv2.viewmodel.LastAction
 
 @Composable
 fun detail(
-    nim: String,
-    nama: String,
-    email: String,
-    alamat: String,
+    state: AuthState,
     onDaftar: () -> Unit = {}
 ) {
     Column(
@@ -37,10 +36,23 @@ fun detail(
         )
 
         Spacer(Modifier.height(16.dp))
-        Text("NIM   : $nim")
-        Text("Nama  : $nama")
-        Text("Email : $email")
-        Text("Alamat: $alamat")
+
+        when (state.lastAction) {
+            LastAction.LOGIN -> {
+                Text("Anda login dengan email:")
+                Text(state.email.ifEmpty { "-" })
+            }
+            LastAction.DAFTAR -> {
+                Text("Data Pendaftaran:")
+                Text("NIM   : ${state.nim.ifEmpty { "-" }}")
+                Text("Nama  : ${state.nama.ifEmpty { "-" }}")
+                Text("Email : ${state.email.ifEmpty { "-" }}")
+                Text("Alamat: ${state.alamat.ifEmpty { "-" }}")
+            }
+            null -> {
+                Text("Belum ada data.")
+            }
+        }
 
         Spacer(Modifier.height(16.dp))
         Button(
@@ -55,5 +67,5 @@ fun detail(
 @Preview
 @Composable
 fun detailPreview() {
-    detail(nim = "-", nama = "-", email = "-", alamat = "-")
+    detail(state = AuthState())
 }
